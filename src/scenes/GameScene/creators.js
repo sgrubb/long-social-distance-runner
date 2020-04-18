@@ -1,6 +1,7 @@
 import Timer from '../../ui/Timer';
 import { DUDE_KEY } from '../../utilities/Keys';
 import { VIEW_DIMENSIONS } from '../../utilities/View';
+import DistanceLabel from '../../ui/DistanceLabel';
 
 export function createPlayer(scene) {
   const player = scene.physics.add.sprite(VIEW_DIMENSIONS.WIDTH / 2, VIEW_DIMENSIONS.HEIGHT / 2, DUDE_KEY);
@@ -9,11 +10,18 @@ export function createPlayer(scene) {
   return player;
 }
 
-export function createTimer(scene, time) {
+export function createTimer(scene, x, y) {
   const style = { fontSize: '32px', fill: '#000' };
-  const x = 16;
-  const y = 16;
-  const label = new Timer(scene, x, y, time, style);
+  const label = new Timer(scene, x, y, 0, style);
+
+  scene.add.existing(label);
+
+  return label;
+}
+
+export function createDistanceLabel(scene, x, y) {
+  const style = { fontSize: '32px', fill: '#000' };
+  const label = new DistanceLabel(scene, x, y, 0, style);
 
   scene.add.existing(label);
 
