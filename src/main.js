@@ -1,11 +1,11 @@
 import Phaser from 'phaser';
-import GameScene from './scenes/GameScene';
-import { GAME_WIDTH, GAME_HEIGHT } from './Constants';
+import GameScene from './scenes/GameScene/GameScene';
+import { VIEW_DIMENSIONS } from './utilities/View';
 
 const config = {
 	type: Phaser.AUTO,
-	width: GAME_WIDTH,
-	height: GAME_HEIGHT,
+	width: VIEW_DIMENSIONS.WIDTH,
+	height: VIEW_DIMENSIONS.HEIGHT,
 	physics: {
 		default: 'arcade'
 	},

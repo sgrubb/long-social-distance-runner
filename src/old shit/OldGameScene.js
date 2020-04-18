@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import ScoreLabel from '../ui/ScoreLabel';
+import ScoreLabel from './ui/ScoreLabel';
 import BombSpawner from './BombSpawner';
 
 const BOMB_KEY = 'bomb';

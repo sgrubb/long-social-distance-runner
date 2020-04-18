@@ -1,0 +1,1 @@
+export const RUNNER_SPAWN_INTERVAL = 2000;
