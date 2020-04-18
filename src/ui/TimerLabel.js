@@ -6,7 +6,7 @@ const formatTime = (time) => {
   return `Time: ${timeMoment.format('mm:ss.SSS')}`;
 }
 
-export default class Timer extends Label {
+export default class TimerLabel extends Label {
 
   constructor(scene, x, y, time, style) {
     super(scene, x, y, time, style, formatTime);

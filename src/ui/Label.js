@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export default class ValueLabel extends Phaser.GameObjects.Text {
+export default class Label extends Phaser.GameObjects.Text {
 
   constructor(scene, x, y, value, style, formatter) {
     super(scene, x, y, formatter(value), style);

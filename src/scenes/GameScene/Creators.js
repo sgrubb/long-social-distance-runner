@@ -1,6 +1,7 @@
-import Timer from '../../ui/Timer';
+import TimerLabel from '../../ui/TimerLabel';
 import { BLACK } from '../../utilities/Colours';
 import { DUDE_KEY } from '../../utilities/Keys';
+import { LABEL_FONT_SIZE, LABEL_MARGIN } from '../../utilities/Labels';
 import { VIEW_DIMENSIONS } from '../../utilities/View';
 import DistanceLabel from '../../ui/DistanceLabel';
 
@@ -11,17 +12,21 @@ export function createPlayer(scene) {
   return player;
 }
 
-export function createTimer(scene, x, y) {
-  const style = { fontSize: '32px', fill: BLACK.STR };
-  const label = new Timer(scene, x, y, 0, style);
+export function createTimerLabel(scene) {
+  const x = LABEL_MARGIN;
+  const y = LABEL_MARGIN;
+  const style = { fontSize: `${LABEL_FONT_SIZE}px`, fill: BLACK.STR };
+  const label = new TimerLabel(scene, x, y, 0, style);
 
   scene.add.existing(label);
 
   return label;
 }
 
-export function createDistanceLabel(scene, x, y) {
-  const style = { fontSize: '32px', fill: BLACK.STR };
+export function createDistanceLabel(scene) {
+  const x = LABEL_MARGIN;
+  const y = VIEW_DIMENSIONS.HEIGHT - LABEL_MARGIN - LABEL_FONT_SIZE;
+  const style = { fontSize: `${LABEL_FONT_SIZE}px`, fill: BLACK.STR };
   const label = new DistanceLabel(scene, x, y, 0, style);
 
   scene.add.existing(label);
