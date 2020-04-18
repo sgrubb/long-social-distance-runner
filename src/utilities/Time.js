@@ -1,1 +1,1 @@
-export const RUNNER_SPAWN_INTERVAL = 200;
+export const RUNNER_SPAWN_INTERVAL_MILLIS = 200;

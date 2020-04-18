@@ -1,19 +1,21 @@
 import Phaser from 'phaser';
-import { createPlayer } from './creators';
+import { createPlayer, createTimer } from './creators';
 import { hitRunner } from './events';
 import RunnerSpawner from '../../spawners/RunnerSpawner';
 import { DUDE_KEY, GROUND_KEY, RUNNER_KEY } from '../../utilities/Keys';
 import { VIEW_DIMENSIONS } from '../../utilities/View';
-import { RUNNER_SPAWN_INTERVAL } from '../../utilities/Time';
+import { RUNNER_SPAWN_INTERVAL_MILLIS } from '../../utilities/Time';
 import { SPRITE_VELOCITY } from '../../utilities/Physics';
 
 export default class GameScene extends Phaser.Scene {
 	constructor() {
 		super('game-scene');
 
-		this.player = undefined;
+    this.player = undefined;
+    this.timer = undefined;
 		this.runnerSpawner = undefined;
 
+    this.lastTickTime = 0;
 		this.lastSpawnTime = 0;
 		this.gameOver = false;
 	}
@@ -28,6 +30,8 @@ export default class GameScene extends Phaser.Scene {
 		this.add.image(VIEW_DIMENSIONS.WIDTH / 2, VIEW_DIMENSIONS.HEIGHT / 2, GROUND_KEY);
 
 		this.player = createPlayer(this);
+    this.timer = createTimer(this, 0);
+
 		this.runnerSpawner = new RunnerSpawner(this, RUNNER_KEY);
 		const runnersGroup = this.runnerSpawner.group;
 
@@ -41,9 +45,13 @@ export default class GameScene extends Phaser.Scene {
 			return;
     }
 
-		if ((this.time.now - this.lastSpawnTime) > RUNNER_SPAWN_INTERVAL) {
+    const timeNow = this.time.now;
+    this.timer.add(timeNow - this.lastTickTime);
+    this.lastTickTime = timeNow
+
+		if ((timeNow - this.lastSpawnTime) > RUNNER_SPAWN_INTERVAL_MILLIS) {
       this.runnerSpawner.spawn();
-      this.lastSpawnTime = this.time.now;
+      this.lastSpawnTime = timeNow;
 		}
 
 		if (this.cursors.left.isDown) {
