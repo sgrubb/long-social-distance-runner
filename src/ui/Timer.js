@@ -3,7 +3,6 @@ import moment from 'moment';
   
 const formatTime = (time) => {
   const timeMoment = moment(time);
-  // return `Time: ${time}`;
   return `Time: ${timeMoment.format('mm:ss.SSS')}`;
 }
 
