@@ -14,6 +14,7 @@ export default class GameScene extends Phaser.Scene {
 		this.player = undefined;
 		this.runnerSpawner = undefined;
 
+		this.lastSpawnTime = 0;
 		this.gameOver = false;
 	}
 
@@ -38,10 +39,11 @@ export default class GameScene extends Phaser.Scene {
 	update() {
 		if (this.gameOver) {
 			return;
-		}
+    }
 
-		if (this.time.now % RUNNER_SPAWN_INTERVAL) {
-			this.runnerSpawner.spawn();
+		if ((this.time.now - this.lastSpawnTime) > RUNNER_SPAWN_INTERVAL) {
+      this.runnerSpawner.spawn();
+      this.lastSpawnTime = this.time.now;
 		}
 
 		if (this.cursors.left.isDown) {

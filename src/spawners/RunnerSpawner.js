@@ -19,28 +19,65 @@ export default class RunnerSpawner
 		const edge = getRandomViewEdge();
 
 		if (edge === VIEW_EDGES.LEFT) {
-			const x = 0;
-			const y = Phaser.Math.Between(0, VIEW_DIMENSIONS.HEIGHT);
-			return this.createRunner(x, y);
+			return this.createLeftEdgeRunner();
 		} else if (edge === VIEW_EDGES.RIGHT) {
-			const x = VIEW_DIMENSIONS.WIDTH;
-			const y = Phaser.Math.Between(0, VIEW_DIMENSIONS.HEIGHT);
-			return this.createRunner(x, y);
+			return this.createRightEdgeRunner();
 		} else if (edge === VIEW_EDGES.TOP) {
-			const x = Phaser.Math.Between(0, VIEW_DIMENSIONS.WIDTH);
-			const y = 0;
-			return this.createRunner(x, y);
+			return this.createTopEdgeRunner();
 		} else if (edge === VIEW_EDGES.BOTTOM) {
-			const x = Phaser.Math.Between(0, VIEW_DIMENSIONS.WIDTH);
-			const y = VIEW_DIMENSIONS.HEIGHT;
-			return this.createRunner(x, y);
+			return this.createBottomEdgeRunner();
 		}
 	}
 
-	createRunner(x, y) {
+	createTopEdgeRunner() {
+		const x = Phaser.Math.Between(0, VIEW_DIMENSIONS.WIDTH);
+		const y = 0;
 		const runner = this.group.create(x, y, this.key);
 		runner.setCollideWorldBounds(false);
-		runner.setVelocity(Phaser.Math.Between(RUNNER_MIN_VELOCITY, RUNNER_MAX_VELOCITY));
+
+		const xVelocity = Phaser.Math.Between(-RUNNER_MAX_VELOCITY, RUNNER_MAX_VELOCITY)
+		const yVelocity = Phaser.Math.Between(RUNNER_MIN_VELOCITY, RUNNER_MAX_VELOCITY);
+		runner.setVelocity(xVelocity, yVelocity);
+
+		return runner;
+	}
+
+	createBottomEdgeRunner() {
+		const x = Phaser.Math.Between(0, VIEW_DIMENSIONS.WIDTH);
+		const y = VIEW_DIMENSIONS.HEIGHT;
+		const runner = this.group.create(x, y, this.key);
+		runner.setCollideWorldBounds(false);
+
+		const xVelocity = Phaser.Math.Between(-RUNNER_MAX_VELOCITY, RUNNER_MAX_VELOCITY)
+		const yVelocity = -Phaser.Math.Between(RUNNER_MIN_VELOCITY, RUNNER_MAX_VELOCITY);
+		runner.setVelocity(xVelocity, yVelocity);
+
+		return runner;
+	}
+
+	createLeftEdgeRunner() {
+		const x = 0;
+		const y = Phaser.Math.Between(0, VIEW_DIMENSIONS.HEIGHT);
+		const runner = this.group.create(x, y, this.key);
+		runner.setCollideWorldBounds(false);
+
+		const xVelocity = Phaser.Math.Between(RUNNER_MIN_VELOCITY, RUNNER_MAX_VELOCITY)
+		const yVelocity = Phaser.Math.Between(-RUNNER_MAX_VELOCITY, RUNNER_MAX_VELOCITY);
+		runner.setVelocity(xVelocity, yVelocity);
+
+		return runner;
+	}
+
+	createRightEdgeRunner() {
+		const x = VIEW_DIMENSIONS.WIDTH;
+		const y = Phaser.Math.Between(0, VIEW_DIMENSIONS.HEIGHT);
+		const runner = this.group.create(x, y, this.key);
+		runner.setCollideWorldBounds(false);
+
+		const xVelocity = -Phaser.Math.Between(RUNNER_MIN_VELOCITY, RUNNER_MAX_VELOCITY)
+		const yVelocity = Phaser.Math.Between(-RUNNER_MAX_VELOCITY, RUNNER_MAX_VELOCITY);
+		runner.setVelocity(xVelocity, yVelocity);
+
 		return runner;
 	}
 }
