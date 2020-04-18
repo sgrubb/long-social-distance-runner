@@ -2774,4 +2774,4 @@ var e,t=arguments[3];!function(t,n){"object"==typeof exports&&"undefined"!=typeo
 },{"phaser":"g7IM","./creators":"woEP","./events":"oJJR","../../spawners/RunnerSpawner":"YxG8","../../utilities/Keys":"ZoJc","../../utilities/View":"ZcoI","../../utilities/Time":"UZYa","../../utilities/Physics":"ekRv"}],"epB2":[function(require,module,exports) {
 "use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var e=u(require("phaser")),t=u(require("./scenes/GameScene/GameScene")),r=require("./utilities/View");function u(e){return e&&e.__esModule?e:{default:e}}var a={type:e.default.AUTO,width:r.VIEW_DIMENSIONS.WIDTH,height:r.VIEW_DIMENSIONS.HEIGHT,physics:{default:"arcade"},scene:[t.default]},i=new e.default.Game(a);exports.default=i;
 },{"phaser":"g7IM","./scenes/GameScene/GameScene":"R9sr","./utilities/View":"ZcoI"}]},{},["epB2"], null)
-//# sourceMappingURL=/main.fd9c4441.js.map
+//# sourceMappingURL=/long-social-distance-runner/main.fd9c4441.js.map
