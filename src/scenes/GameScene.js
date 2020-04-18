@@ -11,11 +11,7 @@ export default class GameScene extends Phaser.Scene {
 
 	preload() {
 		this.load.image(GROUND_KEY, 'assets/ground.png');
-
-		this.load.spritesheet(DUDE_KEY, 
-			'assets/dude.png',
-			{ frameWidth: 25, frameHeight: 30 }
-		);
+		this.load.image(DUDE_KEY, 'assets/dude.png');
 	}
 
 	create() {		
@@ -29,51 +25,28 @@ export default class GameScene extends Phaser.Scene {
 	update() {
 		if (this.cursors.left.isDown) {
 			this.player.setVelocityX(-160);
-			this.player.anims.play('left', true);
-		} else if (this.cursors.right.isDown) {
+		}
+		else if (this.cursors.right.isDown) {
 			this.player.setVelocityX(160);
-			this.player.anims.play('right', true);
-		} else if (this.cursors.up.isDown) {
-			this.player.setVelocityY(160);
-			this.player.anims.play('up', true);
-		} else if (this.cursors.down.isDown) {
-			this.player.setVelocityY(160);
-			this.player.anims.play('down', true);
-		} else {
+		}
+		else {
 			this.player.setVelocityX(0);
-			this.player.anims.play('turn');
 		}
 
-		if (this.cursors.up.isDown && this.player.body.touching.down)
-		{
-			this.player.setVelocityY(-330);
+		if (this.cursors.up.isDown) {
+			this.player.setVelocityY(-160);
+		}
+		else if (this.cursors.down.isDown) {
+			this.player.setVelocityY(160);
+		}
+		else {
+			this.player.setVelocityY(0);
 		}
 	}
 
 	createPlayer() {
 		const player = this.physics.add.sprite(GAME_WIDTH / 2, GAME_HEIGHT / 2, DUDE_KEY);
-		player.setBounce(0.2);
 		player.setCollideWorldBounds(true);
-
-		this.anims.create({
-			key: 'left',
-			frames: this.anims.generateFrameNumbers(DUDE_KEY, { start: 0, end: 3 }),
-			frameRate: 10,
-			repeat: -1
-		});
-
-		this.anims.create({
-			key: 'turn',
-			frames: [ { key: DUDE_KEY, frame: 4 } ],
-			frameRate: 20
-		});
-
-		this.anims.create({
-			key: 'right',
-			frames: this.anims.generateFrameNumbers(DUDE_KEY, { start: 5, end: 8 }),
-			frameRate: 10,
-			repeat: -1
-		});
 
 		return player;
 	}
