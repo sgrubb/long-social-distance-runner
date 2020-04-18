@@ -5,7 +5,7 @@ export function	hitRunner(scene) {
   return function(player, runner) {
     scene.physics.pause();
 
-    player.setTint(RED);
+    player.setTint(RED.HEX);
 
     scene.gameOver = true;
   }

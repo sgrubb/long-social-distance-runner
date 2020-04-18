@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
-import { createPlayer, createTimer, createDistanceLabel } from './creators';
-import { hitRunner } from './events';
+import { createPlayer, createTimer, createDistanceLabel } from './creatorss';
+import { hitRunner } from './eventss';
 import RunnerSpawner from '../../spawners/RunnerSpawner';
 import { DUDE_KEY, GROUND_KEY, RUNNER_KEY } from '../../utilities/Keys';
 import { VIEW_DIMENSIONS } from '../../utilities/View';
