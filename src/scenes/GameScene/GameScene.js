@@ -36,7 +36,7 @@ export default class GameScene extends Phaser.Scene {
 		this.lastUpdateVelocity = new Phaser.Math.Vector2(0, 0);
 		this.lastSpawnTime = 0;
 		this.gameOver = false;
-		this.resetTime = 0;
+		this.resetTime = true;
 
 		this.shownTime = 0;
 		this.shownDistance = 0;
