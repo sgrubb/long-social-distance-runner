@@ -22,7 +22,7 @@ export default class GameOverScene extends Phaser.Scene {
 
   update() {
     if (this.cursors.space.isDown) {
-      this.scene.stop().run(GAME_SCENE_KEY);
+      this.scene.start(GAME_SCENE_KEY)
       return;
     }
   }

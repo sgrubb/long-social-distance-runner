@@ -19,27 +19,27 @@ export default class GameScene extends Phaser.Scene {
 	constructor() {
 		super(GAME_SCENE_KEY);
 
-    this.resetState();
+		this.resetState();
 	}
 
 	resetState() {
-    this.player = undefined;
-    this.timerLabel = undefined;
-    this.distanceLabel = undefined;
+		this.player = undefined;
+		this.timerLabel = undefined;
+		this.distanceLabel = undefined;
 		this.runnerSpawner = undefined;
 
-		this.time
 		this.lastUpdateTime = 0;
 		this.lastUpdateVelocity = new Phaser.Math.Vector2(0, 0);
 		this.lastSpawnTime = 0;
 		this.gameOver = false;
+		this.resetTime = 0;
 	}
 
 	preload() {
 		this.load.image(GROUND_KEY, 'assets/ground.png');
 		this.load.image(RUNNER_KEY, 'assets/runner.png');
 
-		this.load.spritesheet(DUDE_KEY, 
+		this.load.spritesheet(DUDE_KEY,
 			'assets/dude.png',
 			{ frameWidth: 30, frameHeight: 30 }
 		);
@@ -49,8 +49,8 @@ export default class GameScene extends Phaser.Scene {
 		this.add.image(VIEW_DIMENSIONS.WIDTH / 2, VIEW_DIMENSIONS.HEIGHT / 2, GROUND_KEY);
 
 		this.player = createPlayer(this);
-    this.timerLabel = createTimerLabel(this);
-    this.distanceLabel = createDistanceLabel(this);
+		this.timerLabel = createTimerLabel(this);
+		this.distanceLabel = createDistanceLabel(this);
 
 		this.runnerSpawner = new RunnerSpawner(this, RUNNER_KEY);
 		const runnersGroup = this.runnerSpawner.group;
@@ -58,14 +58,22 @@ export default class GameScene extends Phaser.Scene {
 		this.physics.add.collider(this.player, runnersGroup, hitRunner(this), null, this);
 
 		this.cursors = this.input.keyboard.createCursorKeys();
+		this.time.start();
 	}
 
 	update() {
 		if (this.gameOver) {
 			this.resetState();
-			this.scene.stop().run(GAME_OVER_SCENE_KEY).restart();
+			this.resetTime = true;
+			this.scene.start(GAME_OVER_SCENE_KEY, { time: this.lastUpdateTime });
 			return;
-    }
+		}
+
+		if (this.resetTime) {
+			// hack
+			this.lastUpdateTime = this.time.now;
+			this.resetTime = false;
+		}
 
 		this.player.setVelocity(0, 0);
 
@@ -92,10 +100,10 @@ export default class GameScene extends Phaser.Scene {
 
 		this.timerLabel.add(updateInterval);
 		this.distanceLabel.add(this.lastUpdateVelocity.length() * updateInterval / MILLIS_IN_SEC);
-		
+
 		if ((timeNow - this.lastSpawnTime) > RUNNER_SPAWN_INTERVAL_MILLIS) {
 			this.runnerSpawner.spawn();
-      this.lastSpawnTime = timeNow;
+			this.lastSpawnTime = timeNow;
 		}
 
 		this.lastUpdateTime = timeNow;
