@@ -1,11 +1,17 @@
-import Label from './Label';
 import { METRE } from '/utilities';
+import Label from './Label';
 
 const formatDistance = (distance) => `Distance: ${(distance / METRE).toFixed(2)}m`;
 
-export default class DistanceLabel extends Label {
+export class DistanceLabel extends Label {
 
   constructor(scene, x, y, distance, style) {
     super(scene, x, y, distance, style, formatDistance);
   }
+}
+
+export function createDistanceLabel(scene, x, y, distance, style) {
+  const label = new DistanceLabel(scene, x, y, distance, style);
+  scene.add.existing(label);
+  return label;
 }

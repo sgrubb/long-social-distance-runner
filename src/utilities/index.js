@@ -9,7 +9,7 @@ import {
   UP_RIGHT_KEY,
   getDirectionKeyFromVelocity,
 } from './Animations';
-import { BLACK, RED } from './Colours';
+import { BLACK, RED, WHITE } from './Colours';
 import { DUDE_KEY, GAMEOVER_KEY, GROUND_KEY, RUNNER_KEY } from './Images';
 import { LABEL_FONT_SIZE, LABEL_MARGIN } from './Labels';
 import { RUNNER_MAX_VELOCITY, RUNNER_MIN_VELOCITY, SPRITE_VELOCITY } from './Physics';
@@ -29,6 +29,7 @@ export {
   getDirectionKeyFromVelocity,
   BLACK,
   RED,
+  WHITE,
   DUDE_KEY,
   GAMEOVER_KEY,
   GROUND_KEY,

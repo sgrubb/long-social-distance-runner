@@ -1,10 +1,14 @@
 import Phaser from 'phaser';
 import { RunnerSpawner } from '/spawners';
+import { createDistanceLabel, createTimerLabel } from '/ui';
 import {
+	BLACK,
 	DUDE_KEY,
 	GAME_OVER_SCENE_KEY,
 	GAME_SCENE_KEY,
 	GROUND_KEY,
+	LABEL_FONT_SIZE,
+	LABEL_MARGIN,
 	MILLIS_IN_SEC,
 	RUNNER_KEY,
 	RUNNER_SPAWN_INTERVAL_MILLIS,
@@ -12,7 +16,7 @@ import {
 	VIEW_DIMENSIONS,
 	getDirectionKeyFromVelocity
 } from '/utilities';
-import { createPlayer, createTimerLabel, createDistanceLabel } from './Creators';
+import { createPlayer } from './Creators';
 import { hitRunner } from './Events';
 
 export default class GameScene extends Phaser.Scene {
@@ -33,6 +37,9 @@ export default class GameScene extends Phaser.Scene {
 		this.lastSpawnTime = 0;
 		this.gameOver = false;
 		this.resetTime = 0;
+
+		this.shownTime = 0;
+		this.shownDistance = 0;
 	}
 
 	preload() {
@@ -49,8 +56,20 @@ export default class GameScene extends Phaser.Scene {
 		this.add.image(VIEW_DIMENSIONS.WIDTH / 2, VIEW_DIMENSIONS.HEIGHT / 2, GROUND_KEY);
 
 		this.player = createPlayer(this);
-		this.timerLabel = createTimerLabel(this);
-		this.distanceLabel = createDistanceLabel(this);
+		this.timerLabel = createTimerLabel(
+			this,
+			LABEL_MARGIN,
+			LABEL_MARGIN,
+			0,
+			{ fontSize: `${LABEL_FONT_SIZE}px`, fill: BLACK.STR }
+		);
+		this.distanceLabel = createDistanceLabel(
+			this,
+			LABEL_MARGIN,
+			VIEW_DIMENSIONS.HEIGHT - LABEL_MARGIN - LABEL_FONT_SIZE,
+			0,
+			{ fontSize: `${LABEL_FONT_SIZE}px`, fill: BLACK.STR }
+		);
 
 		this.runnerSpawner = new RunnerSpawner(this, RUNNER_KEY);
 		const runnersGroup = this.runnerSpawner.group;
@@ -63,9 +82,12 @@ export default class GameScene extends Phaser.Scene {
 
 	update() {
 		if (this.gameOver) {
+			const time = this.shownTime;
+			const distance = this.shownDistance;
+
 			this.resetState();
 			this.resetTime = true;
-			this.scene.start(GAME_OVER_SCENE_KEY, { time: this.lastUpdateTime });
+			this.scene.start( GAME_OVER_SCENE_KEY, { time, distance });
 			return;
 		}
 
@@ -96,10 +118,14 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		const timeNow = this.time.now;
-		const updateInterval = timeNow - this.lastUpdateTime;
+		const timeUpdateInterval = timeNow - this.lastUpdateTime;
+		const distanceUpdateInterval = this.lastUpdateVelocity.length() * timeUpdateInterval / MILLIS_IN_SEC;
 
-		this.timerLabel.add(updateInterval);
-		this.distanceLabel.add(this.lastUpdateVelocity.length() * updateInterval / MILLIS_IN_SEC);
+		this.timerLabel.add(timeUpdateInterval);
+		this.distanceLabel.add(distanceUpdateInterval);
+
+		this.shownTime += timeUpdateInterval;
+		this.shownDistance += distanceUpdateInterval;
 
 		if ((timeNow - this.lastSpawnTime) > RUNNER_SPAWN_INTERVAL_MILLIS) {
 			this.runnerSpawner.spawn();

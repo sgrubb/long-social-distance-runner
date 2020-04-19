@@ -54,25 +54,3 @@ export function createPlayer(scene) {
 
   return player;
 }
-
-export function createTimerLabel(scene) {
-  const x = LABEL_MARGIN;
-  const y = LABEL_MARGIN;
-  const style = { fontSize: `${LABEL_FONT_SIZE}px`, fill: BLACK.STR };
-  const label = new TimerLabel(scene, x, y, 0, style);
-
-  scene.add.existing(label);
-
-  return label;
-}
-
-export function createDistanceLabel(scene) {
-  const x = LABEL_MARGIN;
-  const y = VIEW_DIMENSIONS.HEIGHT - LABEL_MARGIN - LABEL_FONT_SIZE;
-  const style = { fontSize: `${LABEL_FONT_SIZE}px`, fill: BLACK.STR };
-  const label = new DistanceLabel(scene, x, y, 0, style);
-
-  scene.add.existing(label);
-
-  return label;
-}

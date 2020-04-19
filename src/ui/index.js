@@ -1,4 +1,4 @@
-import DistanceLabel from './DistanceLabel';
-import TimerLabel from './TimerLabel';
+import { DistanceLabel, createDistanceLabel } from './DistanceLabel';
+import { TimerLabel , createTimerLabel } from './TimerLabel';
 
-export { DistanceLabel, TimerLabel };
+export { DistanceLabel, TimerLabel, createDistanceLabel, createTimerLabel };
