@@ -17,8 +17,6 @@ import {
 	PLAYER_STOP_KEY,
 	VIEW_DIMENSIONS
 } from '/utilities';
-import { createPlayer } from './Creators';
-import { hitRunner } from './Events';
 
 export default class GameScene extends Phaser.Scene {
 	constructor() {
@@ -58,12 +56,12 @@ export default class GameScene extends Phaser.Scene {
 	create() {
 		this.add.image(VIEW_DIMENSIONS.WIDTH / 2, VIEW_DIMENSIONS.HEIGHT / 2, GROUND_KEY);
 		
-		this.player = createPlayer(this);
+		this.player = this.createPlayer();
 
 		this.runnerSpawner = new RunnerSpawner(this);
 		const runnersGroup = this.runnerSpawner.group;
 
-		this.physics.add.collider(this.player, runnersGroup, hitRunner(this), null, this);
+		this.physics.add.collider(this.player, runnersGroup, this.hitRunner, null, this);
 
 		this.timerLabel = createTimerLabel(
 			this,
@@ -130,5 +128,29 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		this.lastUpdateTime = timeNow;
+	}
+
+	createPlayer() {
+		const player = this.physics.add.sprite(VIEW_DIMENSIONS.WIDTH / 2, VIEW_DIMENSIONS.HEIGHT / 2, DUDE_KEY);
+		player.setCollideWorldBounds(true);
+	
+		this.anims.create({
+			key: PLAYER_RUN_KEY,
+			frames: this.anims.generateFrameNumbers(DUDE_KEY, { start: 0, end: 7 }),
+			frameRate: 10,
+			repeat: -1
+		});
+		this.anims.create({
+			key: PLAYER_STOP_KEY,
+			frames: [ { key: DUDE_KEY, frame: 0 } ],
+			frameRate: 20
+		})
+	
+		return player;
+	}
+
+	hitRunner() {
+		this.physics.pause();
+		this.gameOver = true;
 	}
 }

@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
-import { createDistanceLabel, createTimerLabel } from '/ui';
+import { createDistanceLabel, createNameInput, createTimerLabel } from '/ui';
 import { BLACK, GAME_SCENE_KEY, SUBMIT_SCORE_KEY, SUBMIT_SCORE_SCENE_KEY, VIEW_DIMENSIONS } from '/utilities';
-import createNameInput from './NameInput';
 
 export default class TitleScene extends Phaser.Scene {
   constructor() {

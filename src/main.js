@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
-import { GameScene, GameOverScene, TitleScene, SubmitScoreScene } from './scenes';
-import { VIEW_DIMENSIONS } from './utilities/View';
+import { GameScene, GameOverScene, TitleScene, SubmitScoreScene } from '/scenes';
+import { VIEW_DIMENSIONS } from '/utilities';
 
 const config = {
 	type: Phaser.AUTO,
