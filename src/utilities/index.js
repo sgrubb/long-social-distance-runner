@@ -1,4 +1,4 @@
-import { RUN_KEY, STOP_KEY } from './Animations';
+import { PLAYER_RUN_KEY, PLAYER_STOP_KEY, RUNNER_RUN_KEY } from './Animations';
 import { BLACK, RED, WHITE } from './Colours';
 import { DUDE_KEY, GAMEOVER_KEY, GROUND_KEY, RUNNER_KEY, TITLE_KEY } from './Images';
 import { LABEL_FONT_SIZE, LABEL_MARGIN } from './Labels';
@@ -8,8 +8,9 @@ import { MILLIS_IN_SEC, RUNNER_SPAWN_INTERVAL_MILLIS } from './Time';
 import { METRE, VIEW_DIMENSIONS, VIEW_EDGES, getRandomViewEdge } from './View';
 
 export {
-  RUN_KEY,
-  STOP_KEY,
+  PLAYER_RUN_KEY,
+  PLAYER_STOP_KEY,
+  RUNNER_RUN_KEY,
   BLACK,
   RED,
   WHITE,

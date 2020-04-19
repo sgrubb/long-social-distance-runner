@@ -10,11 +10,11 @@ import {
 	LABEL_FONT_SIZE,
 	LABEL_MARGIN,
 	MILLIS_IN_SEC,
-	RUN_KEY,
+	PLAYER_RUN_KEY,
 	RUNNER_KEY,
 	RUNNER_SPAWN_INTERVAL_MILLIS,
 	SPRITE_VELOCITY,
-	STOP_KEY,
+	PLAYER_STOP_KEY,
 	VIEW_DIMENSIONS
 } from '/utilities';
 import { createPlayer } from './Creators';
@@ -44,18 +44,27 @@ export default class GameScene extends Phaser.Scene {
 
 	preload() {
 		this.load.image(GROUND_KEY, 'assets/ground.png');
-		this.load.image(RUNNER_KEY, 'assets/runner.png');
 
 		this.load.spritesheet(DUDE_KEY,
 			'assets/dude.png',
+			{ frameWidth: 33, frameHeight: 28 }
+		);
+		this.load.spritesheet(RUNNER_KEY,
+			'assets/runner.png',
 			{ frameWidth: 33, frameHeight: 28 }
 		);
 	}
 
 	create() {
 		this.add.image(VIEW_DIMENSIONS.WIDTH / 2, VIEW_DIMENSIONS.HEIGHT / 2, GROUND_KEY);
-
+		
 		this.player = createPlayer(this);
+
+		this.runnerSpawner = new RunnerSpawner(this);
+		const runnersGroup = this.runnerSpawner.group;
+
+		this.physics.add.collider(this.player, runnersGroup, hitRunner(this), null, this);
+
 		this.timerLabel = createTimerLabel(
 			this,
 			LABEL_MARGIN,
@@ -70,11 +79,6 @@ export default class GameScene extends Phaser.Scene {
 			0,
 			{ fontSize: `${LABEL_FONT_SIZE}px`, fill: BLACK.STR }
 		);
-
-		this.runnerSpawner = new RunnerSpawner(this, RUNNER_KEY);
-		const runnersGroup = this.runnerSpawner.group;
-
-		this.physics.add.collider(this.player, runnersGroup, hitRunner(this), null, this);
 
 		this.cursors = this.input.keyboard.createCursorKeys();
 		this.time.start();
@@ -105,9 +109,9 @@ export default class GameScene extends Phaser.Scene {
 		this.player.setVelocity(newVelocity.x, newVelocity.y);
 		if (newVelocity.length() > 0) {
 			this.player.setAngle(Phaser.Math.RadToDeg(newVelocity.angle()));
-			this.player.anims.play(RUN_KEY, true);
+			this.player.anims.play(PLAYER_RUN_KEY, true);
 		} else {
-			this.player.anims.play(STOP_KEY, true);
+			this.player.anims.play(PLAYER_STOP_KEY, true);
 		}
 
 		const timeNow = this.time.now;
