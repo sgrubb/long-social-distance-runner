@@ -1,1 +1,3 @@
+export const MILLIS_IN_SEC = 1000;
+
 export const RUNNER_SPAWN_INTERVAL_MILLIS = 200;

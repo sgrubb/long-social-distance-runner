@@ -12,6 +12,8 @@ export const VIEW_EDGES = {
   BOTTOM: 'BOTTOM'
 };
 
+export const METRE = 50;
+
 export function getRandomViewEdge() {
   return VIEW_EDGES[Object.keys(VIEW_EDGES)[Phaser.Math.Between(0, 3)]];
 }

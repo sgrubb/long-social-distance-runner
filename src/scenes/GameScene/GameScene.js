@@ -2,9 +2,10 @@ import Phaser from 'phaser';
 import { createPlayer, createTimerLabel, createDistanceLabel } from './Creators';
 import { hitRunner } from './Events';
 import RunnerSpawner from '../../spawners/RunnerSpawner';
-import { DUDE_KEY, GROUND_KEY, RUNNER_KEY } from '../../utilities/Keys';
+import { getDirectionKeyFromVelocity } from '../../utilities/Animations';
+import { DUDE_KEY, GROUND_KEY, RUNNER_KEY } from '../../utilities/Images';
 import { VIEW_DIMENSIONS } from '../../utilities/View';
-import { RUNNER_SPAWN_INTERVAL_MILLIS } from '../../utilities/Time';
+import { MILLIS_IN_SEC, RUNNER_SPAWN_INTERVAL_MILLIS } from '../../utilities/Time';
 import { SPRITE_VELOCITY } from '../../utilities/Physics';
 
 export default class GameScene extends Phaser.Scene {
@@ -16,15 +17,20 @@ export default class GameScene extends Phaser.Scene {
     this.distanceLabel = undefined;
 		this.runnerSpawner = undefined;
 
-    this.lastTickTime = 0;
+		this.lastUpdateTime = 0;
+		this.lastUpdateVelocity = new Phaser.Math.Vector2(0, 0);
 		this.lastSpawnTime = 0;
 		this.gameOver = false;
 	}
 
 	preload() {
 		this.load.image(GROUND_KEY, 'assets/ground.png');
-		this.load.image(DUDE_KEY, 'assets/dude.png');
 		this.load.image(RUNNER_KEY, 'assets/runner.png');
+
+		this.load.spritesheet(DUDE_KEY, 
+			'assets/dude.png',
+			{ frameWidth: 30, frameHeight: 30 }
+		);
 	}
 
 	create() {
@@ -47,37 +53,38 @@ export default class GameScene extends Phaser.Scene {
 			return;
     }
 
-    const timeNow = this.time.now;
-    this.timerLabel.add(timeNow - this.lastTickTime);
-    this.lastTickTime = timeNow
+		this.player.setVelocity(0, 0);
 
+		if (this.cursors.left.isDown) {
+			this.player.setVelocityX(this.player.body.velocity.x - SPRITE_VELOCITY);
+		}
+		if (this.cursors.right.isDown) {
+			this.player.setVelocityX(this.player.body.velocity.x + SPRITE_VELOCITY);
+		}
+		if (this.cursors.up.isDown) {
+			this.player.setVelocityY(this.player.body.velocity.y - SPRITE_VELOCITY);
+		}
+		if (this.cursors.down.isDown) {
+			this.player.setVelocityY(this.player.body.velocity.y + SPRITE_VELOCITY);
+		}
+
+		const velocity = this.player.body.velocity;
+		if (velocity.length() > 0) {
+			this.player.anims.play(getDirectionKeyFromVelocity(velocity), true);
+		}
+		
+		const timeNow = this.time.now;
+		const updateInterval = timeNow - this.lastUpdateTime;
+
+		this.timerLabel.add(updateInterval);
+		this.distanceLabel.add(this.lastUpdateVelocity.length() * updateInterval / MILLIS_IN_SEC);
+		
 		if ((timeNow - this.lastSpawnTime) > RUNNER_SPAWN_INTERVAL_MILLIS) {
-      this.runnerSpawner.spawn();
+			this.runnerSpawner.spawn();
       this.lastSpawnTime = timeNow;
 		}
 
-		if (this.cursors.left.isDown) {
-      this.player.setVelocityX(-SPRITE_VELOCITY);
-      this.distanceLabel.add(1);
-		}
-		else if (this.cursors.right.isDown) {
-			this.player.setVelocityX(SPRITE_VELOCITY);
-      this.distanceLabel.add(1);
-		}
-		else {
-			this.player.setVelocityX(0);
-		}
-
-		if (this.cursors.up.isDown) {
-			this.player.setVelocityY(-SPRITE_VELOCITY);
-      this.distanceLabel.add(1);
-		}
-		else if (this.cursors.down.isDown) {
-			this.player.setVelocityY(SPRITE_VELOCITY);
-      this.distanceLabel.add(1);
-		}
-		else {
-			this.player.setVelocityY(0);
-		}
+		this.lastUpdateTime = timeNow;
+		this.lastUpdateVelocity = velocity;
 	}
 }

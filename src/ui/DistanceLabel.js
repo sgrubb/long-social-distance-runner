@@ -1,6 +1,7 @@
 import Label from './Label';
+import { METRE } from '../utilities/View';
 
-const formatDistance = (distance) => `Distance: ${distance}m`;
+const formatDistance = (distance) => `Distance: ${(distance / METRE).toFixed(2)}m`;
 
 export default class DistanceLabel extends Label {
 
