@@ -1,17 +1,11 @@
 import { DistanceLabel, TimerLabel } from '/ui';
 import {
   BLACK,
-  DOWN_KEY,
-  DOWN_LEFT_KEY,
-  DOWN_RIGHT_KEY,
   DUDE_KEY,
   LABEL_FONT_SIZE,
   LABEL_MARGIN,
-  LEFT_KEY,
-  RIGHT_KEY,
-  UP_KEY,
-  UP_LEFT_KEY,
-  UP_RIGHT_KEY,
+  RUN_KEY,
+  STOP_KEY,
   VIEW_DIMENSIONS
 } from '/utilities';
 
@@ -20,37 +14,16 @@ export function createPlayer(scene) {
   player.setCollideWorldBounds(true);
 
   scene.anims.create({
-    key: LEFT_KEY,
-    frames: [ { key: DUDE_KEY, frame: 6 } ],
+    key: RUN_KEY,
+    frames: scene.anims.generateFrameNumbers(DUDE_KEY, { start: 0, end: 7 }),
+    frameRate: 10,
+    repeat: -1
   });
   scene.anims.create({
-    key: RIGHT_KEY,
-    frames: [ { key: DUDE_KEY, frame: 2 } ],
-  });
-  scene.anims.create({
-    key: UP_KEY,
+    key: STOP_KEY,
     frames: [ { key: DUDE_KEY, frame: 0 } ],
-  });
-  scene.anims.create({
-    key: DOWN_KEY,
-    frames: [ { key: DUDE_KEY, frame: 4 } ],
-  });
-  scene.anims.create({
-    key: UP_LEFT_KEY,
-    frames: [ { key: DUDE_KEY, frame: 7 } ],
-  });
-  scene.anims.create({
-    key: UP_RIGHT_KEY,
-    frames: [ { key: DUDE_KEY, frame: 1 } ],
-  });
-  scene.anims.create({
-    key: DOWN_LEFT_KEY,
-    frames: [ { key: DUDE_KEY, frame: 5 } ],
-  });
-  scene.anims.create({
-    key: DOWN_RIGHT_KEY,
-    frames: [ { key: DUDE_KEY, frame: 3 } ],
-  });
+    frameRate: 20
+  })
 
   return player;
 }

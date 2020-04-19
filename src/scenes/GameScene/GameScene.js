@@ -10,11 +10,12 @@ import {
 	LABEL_FONT_SIZE,
 	LABEL_MARGIN,
 	MILLIS_IN_SEC,
+	RUN_KEY,
 	RUNNER_KEY,
 	RUNNER_SPAWN_INTERVAL_MILLIS,
 	SPRITE_VELOCITY,
-	VIEW_DIMENSIONS,
-	getDirectionKeyFromVelocity
+	STOP_KEY,
+	VIEW_DIMENSIONS
 } from '/utilities';
 import { createPlayer } from './Creators';
 import { hitRunner } from './Events';
@@ -33,7 +34,6 @@ export default class GameScene extends Phaser.Scene {
 		this.runnerSpawner = undefined;
 
 		this.lastUpdateTime = 0;
-		this.lastUpdateVelocity = new Phaser.Math.Vector2(0, 0);
 		this.lastSpawnTime = 0;
 		this.gameOver = false;
 		this.resetTime = true;
@@ -48,7 +48,7 @@ export default class GameScene extends Phaser.Scene {
 
 		this.load.spritesheet(DUDE_KEY,
 			'assets/dude.png',
-			{ frameWidth: 30, frameHeight: 30 }
+			{ frameWidth: 33, frameHeight: 28 }
 		);
 	}
 
@@ -97,35 +97,28 @@ export default class GameScene extends Phaser.Scene {
 			this.resetTime = false;
 		}
 
-		this.player.setVelocity(0, 0);
+		const currentVelocity = this.player.body.velocity;
+		const newVelocity = new Phaser.Math.Vector2(
+			(this.cursors.right.isDown ? SPRITE_VELOCITY : 0) - (this.cursors.left.isDown ? SPRITE_VELOCITY : 0),
+			(this.cursors.down.isDown ? SPRITE_VELOCITY : 0) - (this.cursors.up.isDown ? SPRITE_VELOCITY : 0));
 
-		if (this.cursors.left.isDown) {
-			this.player.setVelocityX(this.player.body.velocity.x - SPRITE_VELOCITY);
-		}
-		if (this.cursors.right.isDown) {
-			this.player.setVelocityX(this.player.body.velocity.x + SPRITE_VELOCITY);
-		}
-		if (this.cursors.up.isDown) {
-			this.player.setVelocityY(this.player.body.velocity.y - SPRITE_VELOCITY);
-		}
-		if (this.cursors.down.isDown) {
-			this.player.setVelocityY(this.player.body.velocity.y + SPRITE_VELOCITY);
-		}
-
-		const velocity = this.player.body.velocity;
-		if (velocity.length() > 0) {
-			this.player.anims.play(getDirectionKeyFromVelocity(velocity), true);
+		this.player.setVelocity(newVelocity.x, newVelocity.y);
+		if (newVelocity.length() > 0) {
+			this.player.setAngle(Phaser.Math.RadToDeg(newVelocity.angle()));
+			this.player.anims.play(RUN_KEY, true);
+		} else {
+			this.player.anims.play(STOP_KEY, true);
 		}
 
 		const timeNow = this.time.now;
-		const timeUpdateInterval = timeNow - this.lastUpdateTime;
-		const distanceUpdateInterval = this.lastUpdateVelocity.length() * timeUpdateInterval / MILLIS_IN_SEC;
+		const updateTimeDelta = timeNow - this.lastUpdateTime;
+		const updateDistanceDelta = currentVelocity.length() * updateTimeDelta / MILLIS_IN_SEC;
 
-		this.timerLabel.add(timeUpdateInterval);
-		this.distanceLabel.add(distanceUpdateInterval);
+		this.timerLabel.add(updateTimeDelta);
+		this.distanceLabel.add(updateDistanceDelta);
 
-		this.shownTime += timeUpdateInterval;
-		this.shownDistance += distanceUpdateInterval;
+		this.shownTime += updateTimeDelta;
+		this.shownDistance += updateDistanceDelta;
 
 		if ((timeNow - this.lastSpawnTime) > RUNNER_SPAWN_INTERVAL_MILLIS) {
 			this.runnerSpawner.spawn();
@@ -133,6 +126,5 @@ export default class GameScene extends Phaser.Scene {
 		}
 
 		this.lastUpdateTime = timeNow;
-		this.lastUpdateVelocity = velocity;
 	}
 }

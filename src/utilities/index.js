@@ -1,14 +1,4 @@
-import {
-  DOWN_KEY,
-  DOWN_LEFT_KEY,
-  DOWN_RIGHT_KEY,
-  LEFT_KEY,
-  RIGHT_KEY,
-  UP_KEY,
-  UP_LEFT_KEY,
-  UP_RIGHT_KEY,
-  getDirectionKeyFromVelocity,
-} from './Animations';
+import { RUN_KEY, STOP_KEY } from './Animations';
 import { BLACK, RED, WHITE } from './Colours';
 import { DUDE_KEY, GAMEOVER_KEY, GROUND_KEY, RUNNER_KEY, TITLE_KEY } from './Images';
 import { LABEL_FONT_SIZE, LABEL_MARGIN } from './Labels';
@@ -18,15 +8,8 @@ import { MILLIS_IN_SEC, RUNNER_SPAWN_INTERVAL_MILLIS } from './Time';
 import { METRE, VIEW_DIMENSIONS, VIEW_EDGES, getRandomViewEdge } from './View';
 
 export {
-  DOWN_KEY,
-  DOWN_LEFT_KEY,
-  DOWN_RIGHT_KEY,
-  LEFT_KEY,
-  RIGHT_KEY,
-  UP_KEY,
-  UP_LEFT_KEY,
-  UP_RIGHT_KEY,
-  getDirectionKeyFromVelocity,
+  RUN_KEY,
+  STOP_KEY,
   BLACK,
   RED,
   WHITE,
