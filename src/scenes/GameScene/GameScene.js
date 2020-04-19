@@ -1,22 +1,28 @@
 import Phaser from 'phaser';
 import { createPlayer, createTimerLabel, createDistanceLabel } from './Creators';
 import { hitRunner } from './Events';
+import { GAME_SCENE_KEY, GAME_OVER_SCENE_KEY } from '../Keys';
 import RunnerSpawner from '../../spawners/RunnerSpawner';
 import { getDirectionKeyFromVelocity } from '../../utilities/Animations';
 import { DUDE_KEY, GROUND_KEY, RUNNER_KEY } from '../../utilities/Images';
-import { VIEW_DIMENSIONS } from '../../utilities/View';
-import { MILLIS_IN_SEC, RUNNER_SPAWN_INTERVAL_MILLIS } from '../../utilities/Time';
 import { SPRITE_VELOCITY } from '../../utilities/Physics';
+import { MILLIS_IN_SEC, RUNNER_SPAWN_INTERVAL_MILLIS } from '../../utilities/Time';
+import { VIEW_DIMENSIONS } from '../../utilities/View';
 
 export default class GameScene extends Phaser.Scene {
 	constructor() {
-		super('game-scene');
+		super(GAME_SCENE_KEY);
 
+    this.resetState();
+	}
+
+	resetState() {
     this.player = undefined;
     this.timerLabel = undefined;
     this.distanceLabel = undefined;
 		this.runnerSpawner = undefined;
 
+		this.time
 		this.lastUpdateTime = 0;
 		this.lastUpdateVelocity = new Phaser.Math.Vector2(0, 0);
 		this.lastSpawnTime = 0;
@@ -50,6 +56,8 @@ export default class GameScene extends Phaser.Scene {
 
 	update() {
 		if (this.gameOver) {
+			this.resetState();
+			this.scene.stop().run(GAME_OVER_SCENE_KEY).restart();
 			return;
     }
 
@@ -72,7 +80,7 @@ export default class GameScene extends Phaser.Scene {
 		if (velocity.length() > 0) {
 			this.player.anims.play(getDirectionKeyFromVelocity(velocity), true);
 		}
-		
+
 		const timeNow = this.time.now;
 		const updateInterval = timeNow - this.lastUpdateTime;
 

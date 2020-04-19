@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import GameScene from './scenes/GameScene/GameScene';
+import GameOverScene from './scenes/GameOverScene/GameOverScene';
 import { VIEW_DIMENSIONS } from './utilities/View';
 
 const config = {
@@ -9,7 +10,7 @@ const config = {
 	physics: {
 		default: 'arcade'
 	},
-	scene: [GameScene]
+	scene: [GameScene, GameOverScene]
 };
 
 export default new Phaser.Game(config);
