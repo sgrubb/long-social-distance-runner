@@ -30,27 +30,40 @@ export default class GameOverScene extends Phaser.Scene {
 
   create() {
     this.add.image(VIEW_DIMENSIONS.WIDTH / 2, VIEW_DIMENSIONS.HEIGHT / 2, GAMEOVER_KEY);
-    const gameover = this.add.text(VIEW_DIMENSIONS.WIDTH / 2, VIEW_DIMENSIONS.HEIGHT / 4, 'GAME OVER', { fontSize: '32px', fill: '#fff' });
-    const prompt = this.add.text(VIEW_DIMENSIONS.WIDTH / 2, 3 * VIEW_DIMENSIONS.HEIGHT / 4, 'press space to restart', { fontSize: '32px', fill: '#fff' });
-    gameover.setOrigin(0.5);
-    prompt.setOrigin(0.5);
 
-    const timeLabel = createTimerLabel(
+    this.add.text(
+      VIEW_DIMENSIONS.WIDTH / 2,
+      VIEW_DIMENSIONS.HEIGHT / 4,
+      'GAME OVER',
+      { fontSize: '32px', fill: WHITE.STR }
+    )
+    .setOrigin(0.5);
+
+    this.add.text(
+      VIEW_DIMENSIONS.WIDTH / 2,
+      3 * VIEW_DIMENSIONS.HEIGHT / 4,
+      'press space to restart',
+      { fontSize: '32px', fill: WHITE.STR }
+    )
+    .setOrigin(0.5);
+
+    createTimerLabel(
       this,
       VIEW_DIMENSIONS.WIDTH / 2,
       VIEW_DIMENSIONS.HEIGHT * 0.45,
       this.time,
 			{ fontSize: `${LABEL_FONT_SIZE}px`, fill: WHITE.STR }
-    );
-    const distanceLabel = createDistanceLabel(
+    )
+    .setOrigin(0.5);
+
+    createDistanceLabel(
       this,
       VIEW_DIMENSIONS.WIDTH / 2,
       VIEW_DIMENSIONS.HEIGHT * 0.55,
       this.distance,
 			{ fontSize: `${LABEL_FONT_SIZE}px`, fill: WHITE.STR }
-    );
-    timeLabel.setOrigin(0.5);
-    distanceLabel.setOrigin(0.5);
+    )
+    .setOrigin(0.5);
 
     this.cursors = this.input.keyboard.createCursorKeys();
   }
