@@ -5,6 +5,7 @@ import {
   GAME_OVER_SCENE_KEY,
   GAMEOVER_KEY,
   LABEL_FONT_SIZE,
+  SUBMIT_SCORE_SCENE_KEY,
   VIEW_DIMENSIONS,
   WHITE,
 } from '/utilities';
@@ -20,8 +21,6 @@ export default class GameOverScene extends Phaser.Scene {
   init(data) {
     this.time = data.time;
     this.distance = data.distance;
-
-    console.log(data);
   }
 
   preload() {
@@ -41,7 +40,15 @@ export default class GameOverScene extends Phaser.Scene {
 
     this.add.text(
       VIEW_DIMENSIONS.WIDTH / 2,
-      3 * VIEW_DIMENSIONS.HEIGHT / 4,
+      VIEW_DIMENSIONS.HEIGHT * 0.7,
+      'press enter to submit your scores',
+      { fontSize: '32px', fill: WHITE.STR }
+    )
+    .setOrigin(0.5);
+
+    this.add.text(
+      VIEW_DIMENSIONS.WIDTH / 2,
+      VIEW_DIMENSIONS.HEIGHT * 0.8,
       'press space to restart',
       { fontSize: '32px', fill: WHITE.STR }
     )
@@ -65,12 +72,20 @@ export default class GameOverScene extends Phaser.Scene {
     )
     .setOrigin(0.5);
 
-    this.cursors = this.input.keyboard.createCursorKeys();
+    this.keys = this.input.keyboard.addKeys({
+      space: Phaser.Input.Keyboard.KeyCodes.SPACE,
+      enter: Phaser.Input.Keyboard.KeyCodes.ENTER,
+    });
   }
 
   update() {
-    if (this.cursors.space.isDown) {
-      this.scene.start(GAME_SCENE_KEY)
+    if (this.keys.space.isDown) {
+      this.scene.start(GAME_SCENE_KEY);
+      return;
+    }
+
+    if (this.keys.enter.isDown) {
+      this.scene.start(SUBMIT_SCORE_SCENE_KEY, { time: this.time, distance: this.distance });
       return;
     }
   }
