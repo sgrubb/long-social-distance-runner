@@ -1,5 +1,5 @@
 import Label from './Label';
-import { METRE } from '../utilities/View';
+import { METRE } from '/utilities';
 
 const formatDistance = (distance) => `Distance: ${(distance / METRE).toFixed(2)}m`;
 

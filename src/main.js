@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
-import GameScene from './scenes/GameScene/GameScene';
-import GameOverScene from './scenes/GameOverScene/GameOverScene';
+import { GameScene, GameOverScene } from './scenes';
 import { VIEW_DIMENSIONS } from './utilities/View';
 
 const config = {

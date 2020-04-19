@@ -1,11 +1,19 @@
-import TimerLabel from '../../ui/TimerLabel';
-import { LEFT_KEY, RIGHT_KEY, UP_KEY, DOWN_KEY,
-		UP_LEFT_KEY, UP_RIGHT_KEY, DOWN_LEFT_KEY, DOWN_RIGHT_KEY } from '../../utilities/Animations';
-import { BLACK } from '../../utilities/Colours';
-import { DUDE_KEY } from '../../utilities/Images';
-import { LABEL_FONT_SIZE, LABEL_MARGIN } from '../../utilities/Labels';
-import { VIEW_DIMENSIONS } from '../../utilities/View';
-import DistanceLabel from '../../ui/DistanceLabel';
+import { DistanceLabel, TimerLabel } from '/ui';
+import {
+  BLACK,
+  DOWN_KEY,
+  DOWN_LEFT_KEY,
+  DOWN_RIGHT_KEY,
+  DUDE_KEY,
+  LABEL_FONT_SIZE,
+  LABEL_MARGIN,
+  LEFT_KEY,
+  RIGHT_KEY,
+  UP_KEY,
+  UP_LEFT_KEY,
+  UP_RIGHT_KEY,
+  VIEW_DIMENSIONS
+} from '/utilities';
 
 export function createPlayer(scene) {
   const player = scene.physics.add.sprite(VIEW_DIMENSIONS.WIDTH / 2, VIEW_DIMENSIONS.HEIGHT / 2, DUDE_KEY);

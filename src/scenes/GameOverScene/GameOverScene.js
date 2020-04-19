@@ -1,7 +1,5 @@
 import Phaser from 'phaser';
-import { GAME_SCENE_KEY, GAME_OVER_SCENE_KEY } from '../Keys';
-import { GAMEOVER_KEY } from '../../utilities/Images';
-import { VIEW_DIMENSIONS } from '../../utilities/View';
+import { GAME_SCENE_KEY, GAME_OVER_SCENE_KEY, GAMEOVER_KEY, VIEW_DIMENSIONS } from '/utilities';
 
 export default class GameOverScene extends Phaser.Scene {
   constructor() {

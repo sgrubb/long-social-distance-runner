@@ -1,13 +1,19 @@
 import Phaser from 'phaser';
+import { RunnerSpawner } from '/spawners';
+import {
+	DUDE_KEY,
+	GAME_OVER_SCENE_KEY,
+	GAME_SCENE_KEY,
+	GROUND_KEY,
+	MILLIS_IN_SEC,
+	RUNNER_KEY,
+	RUNNER_SPAWN_INTERVAL_MILLIS,
+	SPRITE_VELOCITY,
+	VIEW_DIMENSIONS,
+	getDirectionKeyFromVelocity
+} from '/utilities';
 import { createPlayer, createTimerLabel, createDistanceLabel } from './Creators';
 import { hitRunner } from './Events';
-import { GAME_SCENE_KEY, GAME_OVER_SCENE_KEY } from '../Keys';
-import RunnerSpawner from '../../spawners/RunnerSpawner';
-import { getDirectionKeyFromVelocity } from '../../utilities/Animations';
-import { DUDE_KEY, GROUND_KEY, RUNNER_KEY } from '../../utilities/Images';
-import { SPRITE_VELOCITY } from '../../utilities/Physics';
-import { MILLIS_IN_SEC, RUNNER_SPAWN_INTERVAL_MILLIS } from '../../utilities/Time';
-import { VIEW_DIMENSIONS } from '../../utilities/View';
 
 export default class GameScene extends Phaser.Scene {
 	constructor() {

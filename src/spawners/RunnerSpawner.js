@@ -1,6 +1,11 @@
 import Phaser from 'phaser';
-import { RUNNER_MIN_VELOCITY, RUNNER_MAX_VELOCITY } from '../utilities/Physics';
-import { VIEW_DIMENSIONS, VIEW_EDGES, getRandomViewEdge } from '../utilities/View';
+import {
+	RUNNER_MAX_VELOCITY,
+	RUNNER_MIN_VELOCITY,
+	VIEW_DIMENSIONS,
+	VIEW_EDGES,
+	getRandomViewEdge,
+} from '/utilities';
 
 export default class RunnerSpawner
 {

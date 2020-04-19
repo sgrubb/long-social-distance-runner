@@ -1,4 +1,4 @@
-import { RED } from '../../utilities/Colours';
+import { RED } from '/utilities';
 
 export function	hitRunner(scene) {
   // eslint-disable-next-line no-unused-vars
