@@ -17,52 +17,6 @@ const formatTime = (time) => {
 
 const formatDistance = (distance) => `${(distance / METRE).toFixed(2).padStart(8, '0')}m`;
 
-const highScoresTime = [
-  {
-    name: 'AAA',
-    score: formatTime(0),
-  },
-  {
-    name: 'BBB',
-    score: formatTime(0),
-  },
-  {
-    name: 'CCC',
-    score: formatTime(0),
-  },
-  {
-    name: 'DDD',
-    score: formatTime(0),
-  },
-  {
-    name: 'EEE',
-    score: formatTime(0),
-  },
-];
-
-const highScoresDistance = [
-  {
-    name: 'AAA',
-    score: formatDistance(0),
-  },
-  {
-    name: 'BBB',
-    score: formatDistance(0),
-  },
-  {
-    name: 'CCC',
-    score: formatDistance(0),
-  },
-  {
-    name: 'DDD',
-    score: formatDistance(0),
-  },
-  {
-    name: 'EEE',
-    score: formatDistance(0),
-  },
-];
-
 export default class HighScoresScene extends Phaser.Scene {
   constructor() {
     super(HIGH_SCORES_SCENE_KEY);
@@ -95,7 +49,8 @@ export default class HighScoresScene extends Phaser.Scene {
       VIEW_DIMENSIONS.HEIGHT / 3,
       VIEW_DIMENSIONS.HEIGHT / 12,
       0.15,
-      highScoresTime,
+      JSON.parse(window.localStorage.highScores).times,
+      formatTime,
       { fontSize: '24px', fill: WHITE.STR }
     );
 
@@ -112,7 +67,8 @@ export default class HighScoresScene extends Phaser.Scene {
       VIEW_DIMENSIONS.HEIGHT / 3,
       VIEW_DIMENSIONS.HEIGHT / 12,
       0.85,
-      highScoresDistance,
+      JSON.parse(window.localStorage.highScores).distances,
+      formatDistance,
       { fontSize: '24px', fill: WHITE.STR }
     );
 

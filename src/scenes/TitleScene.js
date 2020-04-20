@@ -51,6 +51,55 @@ export default class TitleScene extends Phaser.Scene {
       space: Phaser.Input.Keyboard.KeyCodes.SPACE,
       enter: Phaser.Input.Keyboard.KeyCodes.ENTER,
     });
+
+    if (!window.localStorage.highScores) {
+      window.localStorage.highScores = JSON.stringify({
+        times: [
+          {
+            name: 'AAA',
+            score: 0,
+          },
+          {
+            name: 'BBB',
+            score: 0,
+          },
+          {
+            name: 'CCC',
+            score: 0,
+          },
+          {
+            name: 'DDD',
+            score: 0,
+          },
+          {
+            name: 'EEE',
+            score: 0,
+          },
+        ],
+        distances: [
+          {
+            name: 'AAA',
+            score: 0,
+          },
+          {
+            name: 'BBB',
+            score: 0,
+          },
+          {
+            name: 'CCC',
+            score: 0,
+          },
+          {
+            name: 'DDD',
+            score: 0,
+          },
+          {
+            name: 'EEE',
+            score: 0,
+          },
+        ]
+      })
+    }
   }
 
   update() {

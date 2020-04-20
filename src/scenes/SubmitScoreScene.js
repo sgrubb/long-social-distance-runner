@@ -110,8 +110,20 @@ export default class SubmitScoreScene extends Phaser.Scene {
     const focusedIndex = this.nameInput.getFocusedIndex();
 
     if (Phaser.Input.Keyboard.JustDown(this.keys.enter)) {
-      console.log(`submit: ${this.nameInput.getName()}, time: ${this.time}, distance: ${this.distance}`);
-      // QQ submit
+      const name = this.nameInput.getName();
+
+      const highScores = JSON.parse(window.localStorage.highScores);
+      highScores.times = highScores.times
+        .concat([{ name: name, score: this.time }])
+        .sort((a, b) => b.score - a.score )
+        .slice(0, 5);
+      highScores.distances = highScores.distances
+        .concat([{ name: name, score: this.distance }])
+        .sort((a, b) => b.score - a.score )
+        .slice(0, 5);
+
+      window.localStorage.highScores = JSON.stringify(highScores);
+
       this.scene.start(SCORE_SUBMITTED_SCENE_KEY);
       return;
     }
