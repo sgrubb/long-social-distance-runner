@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { GameScene, GameOverScene, TitleScene, SubmitScoreScene } from '/scenes';
+import { GameScene, GameOverScene, HighScoresScene, TitleScene, ScoreSubmittedScene, SubmitScoreScene } from '/scenes';
 import { VIEW_DIMENSIONS } from '/utilities';
 
 const config = {
@@ -13,6 +13,8 @@ const config = {
 		TitleScene,
 		GameScene,
 		GameOverScene,
+		HighScoresScene,
+		ScoreSubmittedScene,
 		SubmitScoreScene
 	]
 };

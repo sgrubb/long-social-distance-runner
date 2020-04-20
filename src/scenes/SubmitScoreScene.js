@@ -1,8 +1,15 @@
 import Phaser from 'phaser';
 import { createDistanceLabel, createNameInput, createTimerLabel } from '/ui';
-import { BLACK, GAME_SCENE_KEY, SUBMIT_SCORE_KEY, SUBMIT_SCORE_SCENE_KEY, VIEW_DIMENSIONS } from '/utilities';
+import {
+  BLACK,
+  GAME_SCENE_KEY,
+  SUBMIT_SCORE_KEY,
+  SCORE_SUBMITTED_SCENE_KEY,
+  SUBMIT_SCORE_SCENE_KEY,
+  VIEW_DIMENSIONS
+} from '/utilities';
 
-export default class TitleScene extends Phaser.Scene {
+export default class SubmitScoreScene extends Phaser.Scene {
   constructor() {
     super(SUBMIT_SCORE_SCENE_KEY);
 
@@ -104,6 +111,9 @@ export default class TitleScene extends Phaser.Scene {
 
     if (Phaser.Input.Keyboard.JustDown(this.keys.enter)) {
       console.log(`submit: ${this.nameInput.getName()}, time: ${this.time}, distance: ${this.distance}`);
+      // QQ submit
+      this.scene.start(SCORE_SUBMITTED_SCENE_KEY);
+      return;
     }
 
     if (Phaser.Input.Keyboard.JustDown(this.keys.left)) {

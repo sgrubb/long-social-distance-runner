@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import {
   GAME_SCENE_KEY,
+  HIGH_SCORES_SCENE_KEY,
   TITLE_KEY,
   TITLE_SCENE_KEY,
   VIEW_DIMENSIONS,
@@ -32,18 +33,34 @@ export default class TitleScene extends Phaser.Scene {
 
     this.add.text(
       VIEW_DIMENSIONS.WIDTH / 2,
-      3 * VIEW_DIMENSIONS.HEIGHT / 4,
+      VIEW_DIMENSIONS.HEIGHT * 0.7,
       'press space to start',
       { fontSize: '32px', fill: WHITE.STR }
     )
     .setOrigin(0.5);
 
-    this.cursors = this.input.keyboard.createCursorKeys();
+    this.add.text(
+      VIEW_DIMENSIONS.WIDTH / 2,
+      VIEW_DIMENSIONS.HEIGHT * 0.8,
+      'press enter to view high scores',
+      { fontSize: '32px', fill: WHITE.STR }
+    )
+    .setOrigin(0.5);
+
+    this.keys = this.input.keyboard.addKeys({
+      space: Phaser.Input.Keyboard.KeyCodes.SPACE,
+      enter: Phaser.Input.Keyboard.KeyCodes.ENTER,
+    });
   }
 
   update() {
-    if (this.cursors.space.isDown) {
+    if (this.keys.space.isDown) {
       this.scene.start(GAME_SCENE_KEY)
+      return;
+    }
+
+    if (this.keys.enter.isDown) {
+      this.scene.start(HIGH_SCORES_SCENE_KEY)
       return;
     }
   }
